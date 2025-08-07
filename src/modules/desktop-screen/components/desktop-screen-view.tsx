@@ -5,6 +5,7 @@ import { createTaskbarItems } from "@/constants";
 import Taskbar from "../../../../components/taskbar";
 import { AppComponents } from "@/modules/apps/registry";
 import { useAppStore } from "@/store/useAppStore";
+import StartMenu from "@/modules/apps/start-menu/start-menu";
 
 const DesktopScreenView = () => {
   const openApps = useAppStore((state) => state.openApps);
@@ -31,11 +32,7 @@ const DesktopScreenView = () => {
       <div className="flex-1 relative text-white">
         <div className="bg-[url(/images/grain.png)] h-full w-full absolute opacity-75"></div>
         <div className="text-white"></div>
-        {isStartOpen && (
-          <div className="bg-white">
-            <p>hi</p>
-          </div>
-        )}
+        {isStartOpen && <StartMenu />}
 
         {openApps.map((app) => {
           const AppComponent = AppComponents[app];
