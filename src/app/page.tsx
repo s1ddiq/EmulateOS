@@ -5,7 +5,7 @@ import UserSelectorScreen from "../../components/screens/user-selector-screen";
 
 const Home = () => {
   return (
-    <div className="bg-black w-full min-h-screen">
+    <div className="bg-black w-full min-h-screen overflow-hidden">
       <BootScreen />
       <UserSelectorScreen />
       <DesktopScreen />

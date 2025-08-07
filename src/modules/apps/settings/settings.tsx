@@ -1,7 +1,11 @@
-import React from "react";
+import AppWindow from "../components/app-window";
 
 const SettingsApp = () => {
-  return <div>SettingsApp</div>;
+  return (
+    <AppWindow title="Settings">
+      <div>Settings</div>
+    </AppWindow>
+  );
 };
 
 export default SettingsApp;
