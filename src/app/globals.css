@@ -188,4 +188,12 @@
       display: none;
     }
   }
+
+  --animate-pop-up: popUp 0.2s ease-in-out forwards;
+
+  @keyframes popUp {
+    to {
+      scale: 1
+    }
+  }
 }

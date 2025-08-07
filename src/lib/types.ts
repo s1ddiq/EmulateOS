@@ -13,3 +13,14 @@ export type TaskbarItem = {
   isPinned?: boolean;
   action: () => void;
 };
+
+export type FileSystem = {
+  name: string;
+  icon: string;
+  folders: Record<string, Folder>;
+};
+
+export type Folder = {
+  files?: string[];
+  folders?: Record<string, Folder>; // nested folders (optional)
+};

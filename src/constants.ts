@@ -63,3 +63,60 @@ export const createTaskbarItems = ({
     action: openSettings,
   },
 ];
+
+export const SYSTEM_FOLDERS = [
+  {
+    name: "Documents",
+    icon: "📄",
+    folders: {
+      recordings: {
+        files: ["RECORD1ING.TXT"],
+      },
+    },
+  },
+  {
+    name: "Downloads",
+    icon: "⬇️",
+    folders: {
+      recordings: {
+        files: ["RECgRDING.TXT"],
+      },
+    },
+  },
+  {
+    name: "Pictures",
+    icon: "🖼️",
+    folders: {
+      recordings: {
+        files: ["RECORDING.TXT"],
+      },
+    },
+  },
+  {
+    name: "Music",
+    icon: "🎵",
+    folders: {
+      recordings: {
+        files: ["RECORDING.TXT"],
+      },
+    },
+  },
+  {
+    name: "Videos",
+    icon: "🎥",
+    folders: {
+      recordings: {
+        files: ["RECORDING.TXT"],
+      },
+    },
+  },
+  {
+    name: "Desktop",
+    icon: "🖥️",
+    folders: {
+      recordings: {
+        files: ["RECORDING.TXT"],
+      },
+    },
+  },
+];
