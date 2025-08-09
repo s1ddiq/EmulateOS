@@ -1,4 +1,4 @@
-import { LucideIcon } from "lucide-react";
+import { IconNode, LucideIcon } from "lucide-react";
 
 export type TaskbarItem = {
   id: string;
@@ -39,7 +39,7 @@ export type Subfolder = {
 
 export type FolderData = {
   name: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
   folders: {
     [key: string]: Subfolder;
   };

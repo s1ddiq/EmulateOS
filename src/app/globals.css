@@ -56,7 +56,7 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground:oklch(70.566% 0.01449 285.949) ;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -173,7 +173,8 @@
     }
   }
 
-  --animate-fade-out: fadeOut 1s 1s ease-in-out forwards;
+  --animate-fade-out: fadeOut 1s ease-in-out forwards; 
+  /* // add 1s delay */
 
   @keyframes fadeOut {
     from {
@@ -189,11 +190,16 @@
     }
   }
 
-  --animate-pop-up: popUp 0.2s ease-in-out forwards;
+  --animate-pop-up: popUp 0.5s ease-in-out forwards;
 
   @keyframes popUp {
-    to {
-      scale: 1
+    50% {;
+      bottom: 8px;
+    }
+
+    100% {
+      bottom: 8px;
+      z-index: 100;
     }
   }
 }

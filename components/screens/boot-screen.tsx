@@ -23,7 +23,7 @@ const BootScreen = () => {
       // Checks if we have reached the last message, translates too currentMessageIndex < 2
       const timer = setTimeout(() => {
         setCurrentMessageIndex((prev) => prev + 1);
-      }, 200);
+      }, 1);
 
       return () => clearTimeout(timer);
     } else {
