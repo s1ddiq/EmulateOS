@@ -57,79 +57,42 @@ const FileExplorerApp = () => {
   //   const folderToPushTo = SYSTEM_FOLDERS.find((f) => f.name === currentCategory);
   //   folderToPushTo?.folders.push({})
   // };
-  if (createFileModalOpen)
-    return (
-      <AppWindow
-        title="Create File - Function"
-        onClose={() => setCreateFileModalOpen(false)}
-      >
-        <div className="flex flex-col gap-y-4 p-4 max-w-sm justify-center items-center">
-          <Label>File Name</Label>
-          <Input
-            value={fileName}
-            onChange={(e) => setFileName(e.target.value)}
-            placeholder="File Name"
-          />
-          <Label>File Extension</Label>
-          <Input
-            value={fileExtension}
-            onChange={(e) => setFileExtension(e.target.value)}
-            placeholder="e.g, txt"
-          />
-          <Label>
-            File Contents
-            <Link href="/help" className="text-blue-500">
-              Help
-            </Link>
-          </Label>
-          <Input
-            value={JSON.stringify(fileContents)}
-            onChange={(e) => setFileContents(JSON.parse(e.target.value))}
-            placeholder="e.g, { text: 'Hello there!' }"
-          />
 
-          <Button
-            variant="secondary"
-            className="w-full"
-            // onClick={handleCreateFile}
-            disabled={true}
-          >
-            Feature disabled.
-          </Button>
-        </div>
-      </AppWindow>
-    );
   return (
     <AppWindow title="File-Explorer">
       <div className="h-full w-full grid grid-cols-[180px_1fr] overflow-hidden">
         {/* Sidebar */}
         <div className="border-r border-input/30 flex flex-col text-xs p-1 gap-y-2 overflow-y-auto">
-          <div>
+          <div className="space-y-2">
             {SYSTEM_FOLDERS.map((folder) => (
               <div
                 key={folder.name}
-                className={`cursor-pointer hover:bg-zinc-800/65 rounded px-2 py-1 ${
+                className={`cursor-pointer hover:bg-zinc-800/65 rounded px-2 py-1 flex h-8 items-center ${
                   currentCategory === folder.name.toLowerCase()
                     ? "bg-zinc-800/70"
                     : ""
                 }`}
                 onClick={() => setCurrentCategory(folder.name.toLowerCase())}
               >
-                <span className="inline mr-2">{folder.icon}</span>
-                <span className="inline">{folder.name}</span>
+                <folder.icon size={16} />
+                <span className="inline ml-2">{folder.name}</span>
               </div>
             ))}
           </div>
-          <Button
+          {/* <Button
             variant="secondary"
             onClick={() => setCreateFileModalOpen(true)}
           >
             Create File <PlusIcon className="ml-1" size={14} />
-          </Button>
+          </Button> */}
         </div>
 
         {/* Main Content */}
-        <div className="p-3 overflow-y-auto flex flex-col gap-y-4">
+        <div
+          className="p-3 overflow-y-scroll overflow-x-hidden flex flex-col gap-y-4 [&::-webkit-scrollbar]:w-2
+          [&::-webkit-scrollbar-track]:bg-zinc-900
+          [&::-webkit-scrollbar-thumb]:bg-zinc-800"
+        >
           {currentCategoryData && (
             <>
               <div>
@@ -140,7 +103,7 @@ const FileExplorerApp = () => {
               </div>
 
               {/* Subfolders */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full max-w-full">
                 {Object.entries(currentCategoryData.folders).map(
                   ([subfolderName]) => (
                     <div
@@ -160,8 +123,8 @@ const FileExplorerApp = () => {
               {/* Files */}
               {openedFiles.length > 0 && (
                 <div className="mt-4 border-zinc-700 pt-3">
-                  <p className="text-xs mb-2 text-muted-foreground">
-                    Files in {openedSubfolder}
+                  <p className="text-sm mb-2 text-muted-foreground">
+                    {openedSubfolder}
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 text-xs ">
                     {openedFiles.map((file, idx) => (

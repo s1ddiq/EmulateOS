@@ -1,31 +1,12 @@
 "use client";
 import React from "react";
-import { TaskbarItem } from "@/lib/types";
-import { createTaskbarItems } from "@/constants";
 import Taskbar from "../../../../components/taskbar";
 import { AppComponents } from "@/modules/apps/registry";
-import { useAppStore } from "@/store/useAppStore";
 import StartMenu from "@/modules/apps/start-menu/start-menu";
+import { useAppActions } from "@/modules/apps/hooks/use-app-actions";
 
 const DesktopScreenView = () => {
-  const openApps = useAppStore((state) => state.openApps);
-  const isStartOpen = useAppStore((state) => state.isStartOpen);
-
-  const openStartMenu = useAppStore((state) => state.toggleStartMenu);
-  const openApp = useAppStore((state) => state.openApp);
-
-  const openNotepad = () => openApp("notepad");
-  const openSettings = () => openApp("settings");
-  const openFileExplorer = () => openApp("file-explorer");
-
-  const TaskbarItems: TaskbarItem[] = createTaskbarItems({
-    openStartMenu,
-    openNotepad,
-    openSettings,
-    openFileExplorer,
-  });
-
-  console.log(openApps);
+  const { openApps, isStartOpen, openApp } = useAppActions();
   return (
     <div className="flex flex-col max-h-screen min-h-screen bg-black text-white">
       {/* Content Area */}
@@ -33,10 +14,8 @@ const DesktopScreenView = () => {
         <div className="bg-[url(/images/grain.png)] h-full w-full absolute opacity-75"></div>
         <div className="text-white"></div>
         {isStartOpen && <StartMenu />}
-
         {openApps.map((app) => {
           const AppComponent = AppComponents[app];
-          if (!AppComponent) return null;
           return (
             <div key={app}>
               <AppComponent />
@@ -46,7 +25,7 @@ const DesktopScreenView = () => {
       </div>
 
       {/* Taskbar stays at the bottom */}
-      <Taskbar taskbarItems={TaskbarItems} />
+      <Taskbar />
     </div>
   );
 };

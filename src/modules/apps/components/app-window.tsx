@@ -1,8 +1,13 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { MIN_WINDOW_HEIGHT, MIN_WINDOW_WIDTH } from "@/constants";
-import { useAppStore } from "@/store/useAppStore";
+import {
+  INITIAL_WINDOW_HEIGHT,
+  INITIAL_WINDOW_WIDTH,
+  MIN_WINDOW_HEIGHT,
+  MIN_WINDOW_WIDTH,
+} from "@/constants";
+import { useAppStore } from "@/store/store";
 import { Minimize2Icon, ExpandIcon, XIcon, Expand } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
@@ -25,11 +30,11 @@ const AppWindow = ({
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({
-    width: 512,
-    height: 320,
+    width: INITIAL_WINDOW_WIDTH,
+    height: INITIAL_WINDOW_HEIGHT,
   });
   const [resizing, setResizing] = useState(false);
-
+  const [maximized, setMaximized] = useState(false);
   useLayoutEffect(() => {
     const el = windowRef.current;
     if (!el) return;
@@ -85,9 +90,22 @@ const AppWindow = ({
     if (!dragging) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (!windowRef.current) return;
+      const rect = windowRef?.current?.getBoundingClientRect();
+
+      // Calculate raw positions before clamping
+
+      let newX = e.clientX - offset.x;
+      let newY = e.clientY - offset.y;
       setPosition({
-        x: e.clientX - offset.x,
-        y: e.clientY - offset.y,
+        x: Math.min(
+          Math.max(0, newX), // prevent going past left
+          window.innerWidth - rect.width // prevent going past right
+        ),
+        y: Math.min(
+          Math.max(0, newY), // prevent going past top
+          window.innerHeight - rect.height // prevent going past bottom
+        ), // lboundaries
       });
     };
 
@@ -103,11 +121,38 @@ const AppWindow = ({
       window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [dragging, offset]);
+  const handleMaximize = () => {
+    if (maximized) {
+      setPosition({
+        x: (innerWidth - INITIAL_WINDOW_WIDTH) / 2,
+        y: (innerHeight - INITIAL_WINDOW_HEIGHT) / 2,
+      });
+      setDimensions({
+        width: INITIAL_WINDOW_WIDTH,
+        height: INITIAL_WINDOW_HEIGHT,
+      });
+      setMaximized(false);
+    } else {
+      setPosition({ x: 0, y: 0 });
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      setMaximized(true);
+    }
+  };
 
+  const handleMinimize = () => {
+    if (!windowRef.current) return;
+    setPosition({
+      x: INITIAL_WINDOW_WIDTH + 500,
+      y: INITIAL_WINDOW_HEIGHT + 500,
+    });
+  };
   return (
     <div
       ref={windowRef}
-      className={`h-fit absolute ${backgroundColor} shadow-2xl rounded overflow-hidden flex-1`}
+      className={`absolute ${backgroundColor} shadow-2xl rounded overflow-hidden flex flex-col`}
       style={{
         top: position.y,
         left: position.x,
@@ -118,7 +163,7 @@ const AppWindow = ({
       }}
     >
       <div
-        className="absolute bottom-0 right-0 cursor-help"
+        className="absolute bottom-0 right-0 cursor-grab"
         onMouseDown={startResize}
       >
         <ExpandIcon size={16} />
@@ -129,10 +174,10 @@ const AppWindow = ({
       >
         <p className="opacity-80 text-xs">{title}</p>
         <div className="flex gap-1">
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" onClick={handleMinimize}>
             <Minimize2Icon size={2} />
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" onClick={handleMaximize}>
             <ExpandIcon size={2} />
           </Button>
           <Button
@@ -149,7 +194,7 @@ const AppWindow = ({
           </Button>
         </div>
       </div>
-      {children}
+      <div className="flex-1 overflow-auto min-w-0">{children}</div>
     </div>
   );
 };

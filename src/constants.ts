@@ -4,7 +4,7 @@ import { FolderData, TaskbarItem } from "./lib/types";
 // so this is awesome!
 
 // This returns the array instead of exporting it directly
-export const createTaskbarItems = ({
+export const createAppItems = ({
   openStartMenu,
   openNotepad,
   openSettings,
@@ -42,7 +42,7 @@ export const createTaskbarItems = ({
   {
     id: "notepad",
     name: "Notepad",
-    icon: icons.Book,
+    icon: icons.FileText,
     iconSize: 26,
     iconFill: "#0ea5e9",
     iconStroke: "",
@@ -248,7 +248,7 @@ export const createTaskbarItems = ({
 export const SYSTEM_FOLDERS: FolderData[] = [
   {
     name: "Documents",
-    icon: "📄",
+    icon: icons.File,
     folders: {
       Projects: {
         files: [
@@ -290,7 +290,7 @@ export const SYSTEM_FOLDERS: FolderData[] = [
   },
   {
     name: "Downloads",
-    icon: "⬇️",
+    icon: icons.Download,
     folders: {
       Contracts: {
         files: [
@@ -332,7 +332,7 @@ export const SYSTEM_FOLDERS: FolderData[] = [
   },
   {
     name: "Pictures",
-    icon: "🖼️",
+    icon: icons.FileImage,
     folders: {
       Sketches: {
         files: [
@@ -367,7 +367,7 @@ export const SYSTEM_FOLDERS: FolderData[] = [
   },
   {
     name: "Music",
-    icon: "🎵",
+    icon: icons.Music,
     folders: {
       Lyrics: {
         files: [
@@ -402,12 +402,26 @@ export const SYSTEM_FOLDERS: FolderData[] = [
   },
   {
     name: "Videos",
-    icon: "🎥",
+    icon: icons.Clapperboard,
     folders: {
       Scripts: {
         files: [
           {
             fileName: "scene1_script.txt",
+            fileExtension: "txt",
+            fileContents: {
+              text: "Scene 1: User opens EmulateOS, clicks a folder, dialog pops up. Background fades. Sound of typing. Zoom into file viewer.",
+            },
+          },
+          {
+            fileName: "scene2_script.txt",
+            fileExtension: "txt",
+            fileContents: {
+              text: "Scene 3: User opens EmulateOS, clicks a folder, dialog pops up. Background fades. Sound of typing. Zoom into file viewer.",
+            },
+          },
+          {
+            fileName: "scene4_script.txt",
             fileExtension: "txt",
             fileContents: {
               text: "Scene 1: User opens EmulateOS, clicks a folder, dialog pops up. Background fades. Sound of typing. Zoom into file viewer.",
@@ -437,7 +451,7 @@ export const SYSTEM_FOLDERS: FolderData[] = [
   },
   {
     name: "Desktop",
-    icon: "🖥️",
+    icon: icons.Monitor,
     folders: {
       Shortcuts: {
         files: [
@@ -467,3 +481,5 @@ export const SYSTEM_FOLDERS: FolderData[] = [
 
 export const MIN_WINDOW_WIDTH = 512;
 export const MIN_WINDOW_HEIGHT = 320;
+export const INITIAL_WINDOW_WIDTH = 700;
+export const INITIAL_WINDOW_HEIGHT = 400;

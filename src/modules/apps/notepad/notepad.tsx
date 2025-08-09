@@ -7,7 +7,6 @@ const NotepadApp = () => {
   const savedNotes = localStorage.getItem("saved-notes");
   const [notes, setNotes] = useState(savedNotes);
   const handleSaveNote = () => {
-    console.log("hi");
     localStorage.setItem("saved-notes", `${notes}`);
   };
 
